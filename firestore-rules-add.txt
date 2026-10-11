@@ -1,0 +1,13 @@
+// Add these two blocks to your EXISTING Firestore rules
+// (Firebase console > Firestore > Rules), inside "match /databases/{database}/documents { ... }".
+// Keep everything that is already there. Then press Publish.
+
+    // what a player has bought: the player can read it, only the server writes it
+    match /entitlements/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+    // the purchase log: server only
+    match /purchases/{ref} {
+      allow read, write: if false;
+    }
